@@ -1,0 +1,30 @@
+package org.example.models;
+
+public enum Attributes {
+     breed,
+     sex,
+     age,
+     numberOfCatsInHouse,
+     houseType,
+     zone,
+     timeOutside,
+     timeWithOwner,
+     shy,
+     calm,
+     afraid,
+     clever,
+     vigilant,
+     persevering,
+     affectionate,
+     friendly,
+     lonely,
+     brutal,
+     dominant,
+     aggressive,
+     impulsive,
+     predictable,
+     distracted,
+     greeneryInArea,
+     birdCatcher,
+     mammalCatcher
+}
