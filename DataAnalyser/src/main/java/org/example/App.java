@@ -1,7 +1,10 @@
 package org.example;
 
 import org.example.models.Cat;
+import org.example.models.Console;
+import org.example.models.Stats;
 import org.example.processors.EntryReader;
+import org.example.processors.StatsMaker;
 import org.example.processors.Validator;
 import org.example.processors.WriteCSV;
 
@@ -22,40 +25,9 @@ public class App extends EntryReader {
 
         System.out.println("\n" + cats.size() + " valid cats remaining!\n");
 
-        System.out.print("Enter name of output file (without extension): ");
-        Scanner scanner = new Scanner(System.in);
-        String fileName = scanner.nextLine();
+        List<Stats> stats = StatsMaker.getStats(cats);
 
-        WriteCSV.writeCSV(
-                cats,
-                new String[]{"id",
-                        "breed",
-                        "sex",
-                        "age",
-                        "numberOfCatsInHouse",
-                        "houseType",
-                        "zone",
-                        "timeOutside",
-                        "timeWithOwner",
-                        "shy",
-                        "calm",
-                        "afraid",
-                        "clever",
-                        "vigilant",
-                        "persevering",
-                        "affectionate",
-                        "friendly",
-                        "lonely",
-                        "brutal",
-                        "dominant",
-                        "aggressive",
-                        "impulsive",
-                        "predictable",
-                        "distracted",
-                        "greeneryInArea",
-                        "birdCatcher",
-                        "mammalCatcher",
-                        "bonus"},
-                fileName);
+        Console console = new Console(stats, cats);
+        console.start();
     }
 }

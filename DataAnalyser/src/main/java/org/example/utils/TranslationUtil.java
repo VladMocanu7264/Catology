@@ -199,4 +199,36 @@ public class TranslationUtil {
         }
         return nr;
     }
+
+    static public String trBreed(int breed) {
+        switch (breed) {
+            case 1:
+                return "Bengal";
+            case 2:
+                return "Birman";
+            case 3:
+                return "British Shorthair";
+            case 4:
+                return "Chartreux";
+            case 5:
+                return "European";
+            case 6:
+                return "Maine coon";
+            case 7:
+                return "Persian";
+            case 8:
+                return "Ragdoll";
+            case 9:
+                return "Savannah";
+            case 10:
+                return "Sphynx";
+            case 11:
+                return "Siamese";
+            case 12:
+                return "Turkish Angora";
+            case 13:
+                return "Hybrid";
+        }
+        return "ERROR";
+    }
 }

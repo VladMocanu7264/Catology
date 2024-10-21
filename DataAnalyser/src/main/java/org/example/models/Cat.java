@@ -74,6 +74,64 @@ public class Cat {
         };
     }
 
+    public int getAttribute(Attributes attribute) {
+        switch (attribute) {
+            case breed:
+                return breed;
+            case sex:
+                return sex;
+            case age:
+                return age;
+            case numberOfCatsInHouse:
+                return numberOfCatsInHouse;
+            case houseType:
+                return houseType;
+            case zone:
+                return zone;
+            case timeOutside:
+                return timeOutside;
+            case timeWithOwner:
+                return timeWithOwner;
+            case shy:
+                return shy;
+            case calm:
+                return calm;
+            case afraid:
+                return afraid;
+            case clever:
+                return clever;
+            case vigilant:
+                return vigilant;
+            case persevering:
+                return persevering;
+            case affectionate:
+                return affectionate;
+            case friendly:
+                return friendly;
+            case lonely:
+                return lonely;
+            case brutal:
+                return brutal;
+            case dominant:
+                return dominant;
+            case aggressive:
+                return aggressive;
+            case impulsive:
+                return impulsive;
+            case predictable:
+                return predictable;
+            case distracted:
+                return distracted;
+            case greeneryInArea:
+                return greeneryInArea;
+            case birdCatcher:
+                return birdCatcher;
+            case mammalCatcher:
+                return mammalCatcher;
+        }
+        return -1;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
