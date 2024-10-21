@@ -1,4 +1,4 @@
-package org.example.processors;
+package org.example.Graphs;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -38,23 +38,24 @@ public class BarChartBreeds extends JFrame{
     public BarChartBreeds(String title) {
         super(title);
 
-        Map<String, Interger> traitCounter = createDataset("src/Database/ProcessedCatData.csv");
+        DefaultCategoryDataset dataset = createDataset();
         JFreeChart barchat = ChartFactory.createBarChart(
                 "Distribution of cat breeds",
                 "Breed",
                 "Number of cats",
                 dataset,
-                PlotOrientaion.VERTICAL, true, true, false);
-        ChartPanel chartPanel = new ChartPanel(chart);
+                PlotOrientation.VERTICAL, true, true, false);
+        ChartPanel chartPanel = new ChartPanel(barchat);
         chartPanel.setPreferredSize(new java.awt.Dimension(800, 600));
         setContentPane(chartPanel);
     }
 
-    private DefaultCategoryDataset createDataset(String filePath){
+    private DefaultCategoryDataset createDataset(){
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         Map<String, Integer> breedCountMap = new HashMap<>();
 
-        try (CSVParser csvParser = new CSVParser(new FileReader(filePath), CSVFormat.DEFAULT.withHeader())) {
+        try (CSVParser csvParser = new CSVParser(new FileReader("src/Database/ProcessedCatData.csv"),
+                CSVFormat.DEFAULT.withHeader())) {
             for (CSVRecord record : csvParser) {
                 String breedNumberStr = record.get("breed");
                 int breedNumber = Integer.parseInt(breedNumberStr);
@@ -79,5 +80,4 @@ public class BarChartBreeds extends JFrame{
         return dataset;
     }
 
-}
 }
