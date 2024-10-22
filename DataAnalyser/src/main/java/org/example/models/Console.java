@@ -2,6 +2,8 @@ package org.example.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.example.processors.Balancer;
+import org.example.processors.StatsMaker;
 import org.example.processors.WriteCSV;
 
 import java.util.List;
@@ -23,11 +25,12 @@ public class Console {
             System.out.println("stats = Show stats of all breeds");
             System.out.println("stats 1-13 = Show stats for a certain breed");
             System.out.println("create = creates the output CSV file");
+            System.out.println("balance x = balance the database (every breed will have x entries)");
             System.out.println("quit = quits console");
             System.out.print("\nEnter command: ");
 
             input = scanner.nextLine();
-
+            System.out.println();
             if(input.equals("quit")) {
                 break;
             }else if(input.equals("create")) {
@@ -41,6 +44,12 @@ public class Console {
                     throw new RuntimeException("Bad breed");
                 }
                 System.out.println(stats.get(breed));
+            } else if(input.startsWith("balance")) {
+                input = input.replaceAll("balance ", "");
+                int populationSize = Integer.parseInt(input);
+                cats = Balancer.balanceDatabase(cats, stats, populationSize);
+                stats = StatsMaker.getStats(cats);
+                System.out.println("Balanced all breeds!\n");
             }
         }
     }
@@ -49,8 +58,7 @@ public class Console {
         System.out.print("\nEnter name of output file (without extension): ");
         Scanner scanner = new Scanner(System.in);
         String fileName = scanner.nextLine();
-
-        WriteCSV.writeCSV(
+               WriteCSV.writeCSV(
                 cats,
                 new String[]{"id",
                         "breed",
