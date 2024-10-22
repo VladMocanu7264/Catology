@@ -9,18 +9,18 @@ import java.io.FileNotFoundException;
 public class Graphics {
 
     public static void main(String[] args) throws FileNotFoundException {
-//        for breeds the total number
-//        BarChartBreeds bar = new BarChartBreeds("Number of breeds");
-//        bar.setSize(800,600);
-//        bar.setLocationRelativeTo(null);
-//        bar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        bar.setVisible(true);
-//
-////         A pie chart of the overall traits
-//        PieChartOverAllTraits chart = new PieChartOverAllTraits("Pie Chart for Overall Traits");
-//        chart.setSize(800, 600);
-//        chart.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        chart.setVisible(true);
+        //for breeds the total number
+        BarChartBreeds bar = new BarChartBreeds("Number of breeds");
+        bar.setSize(800,600);
+        bar.setLocationRelativeTo(null);
+        bar.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        bar.setVisible(true);
+
+        // A pie chart of the overall traits
+        PieChartOverAllTraits chart = new PieChartOverAllTraits("Pie Chart for Overall Traits");
+        chart.setSize(800, 600);
+        chart.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        chart.setVisible(true);
 
         // Histogram selected traits
 
