@@ -2,12 +2,12 @@ package org.example.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.example.Graphics;
 import org.example.processors.Balancer;
 import org.example.processors.StatsMaker;
 import org.example.processors.WriteCSV;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 @Data
@@ -26,6 +26,8 @@ public class Console {
             System.out.println("stats 1-13 = Show stats for a certain breed");
             System.out.println("create = creates the output CSV file");
             System.out.println("balance x = balance the database (every breed will have x entries)");
+            System.out.println("histogram = shows a histogram");
+            System.out.println("boxplot = shows a boxplot");
             System.out.println("quit = quits console");
             System.out.print("\nEnter command: ");
 
@@ -50,6 +52,12 @@ public class Console {
                 cats = Balancer.balanceDatabase(cats, stats, populationSize);
                 stats = StatsMaker.getStats(cats);
                 System.out.println("Balanced all breeds!\n");
+            } else if(input.equals("histogram")) {
+                showHistogram();
+            } else if(input.equals("boxplot")) {
+                showBoxPlot();
+            } else {
+                System.out.println("\nCommand not recognised!\n");
             }
         }
     }
@@ -89,5 +97,23 @@ public class Console {
                         "mammalCatcher",
                         "bonus"},
                 fileName);
+    }
+
+    private void showHistogram() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter file name: ");
+        String fileName = scanner.nextLine();
+        System.out.print("Enter trait: ");
+        String trait = scanner.nextLine();
+        Graphics.showHistogram(trait, fileName);
+    }
+
+    private void showBoxPlot() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter file name: ");
+        String fileName = scanner.nextLine();
+        System.out.print("Enter trait: ");
+        String trait = scanner.nextLine();
+        Graphics.showBoxPlot(trait, fileName);
     }
 }

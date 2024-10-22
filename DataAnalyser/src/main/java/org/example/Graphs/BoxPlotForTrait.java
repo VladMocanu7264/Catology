@@ -17,10 +17,10 @@ import java.util.List;
 
 public class BoxPlotForTrait extends  JFrame{
 
-    public BoxPlotForTrait(String title, String trait){
+    public BoxPlotForTrait(String title, String trait, String fileName){
         super(title);
 
-        DefaultBoxAndWhiskerCategoryDataset  dataset = createDataSet(trait);
+        DefaultBoxAndWhiskerCategoryDataset  dataset = createDataSet(trait, fileName);
 
         JFreeChart chart = ChartFactory.createBoxAndWhiskerChart(
                 "Distribution of " + trait + " trait",
@@ -35,11 +35,11 @@ public class BoxPlotForTrait extends  JFrame{
         setContentPane(chartPanel);
     }
 
-    private DefaultBoxAndWhiskerCategoryDataset createDataSet(String trait) {
+    private DefaultBoxAndWhiskerCategoryDataset createDataSet(String trait, String fileName) {
         DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
         List<Double> traitValues = new ArrayList<>();
 
-        try (CSVParser csvParser = new CSVParser(new FileReader("src/Database/ProcessedCatData.csv"), CSVFormat.DEFAULT.withHeader())) {
+        try (CSVParser csvParser = new CSVParser(new FileReader("src/Database/" + fileName + ".csv"), CSVFormat.DEFAULT.withHeader())) {
             for (CSVRecord record : csvParser) {
                 String traitValueStr = record.get(trait);
                 if (traitValueStr != null && !traitValueStr.isEmpty()) {

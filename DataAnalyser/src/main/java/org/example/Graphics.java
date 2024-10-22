@@ -24,9 +24,9 @@ public class Graphics {
 
         // Histogram selected traits
 
-        String selectedTrait = "breed";
+        String selectedTrait = "shy";
 
-        HistogramForTrait histogram = new HistogramForTrait("Trait Histogram Example", selectedTrait);
+        HistogramForTrait histogram = new HistogramForTrait("Trait Histogram Example", selectedTrait, args[0]);
         histogram.setSize(800, 600);
         histogram.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         histogram.setVisible(true);
@@ -34,10 +34,24 @@ public class Graphics {
         // box plot
 
         SwingUtilities.invokeLater(() -> {
-            BoxPlotForTrait example = new BoxPlotForTrait("Box plot for:", selectedTrait);
+            BoxPlotForTrait example = new BoxPlotForTrait("Box plot for:", selectedTrait, args[0]);
             example.setSize(800, 600);
             example.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             example.setVisible(true);
         });
+    }
+
+    public static void showHistogram(String selectedTrait, String fileName) {
+        HistogramForTrait histogram = new HistogramForTrait("Trait Histogram Example", selectedTrait, fileName);
+        histogram.setSize(800, 600);
+        histogram.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        histogram.setVisible(true);
+    }
+
+    public static void showBoxPlot(String selectedTrait, String fileName) {
+        BoxPlotForTrait example = new BoxPlotForTrait("Box plot for:", selectedTrait, fileName);
+        example.setSize(800, 600);
+        example.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        example.setVisible(true);
     }
 }

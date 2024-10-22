@@ -17,10 +17,10 @@ import java.util.List;
 
 public class HistogramForTrait extends JFrame {
 
-    public HistogramForTrait(String title, String trait) {
+    public HistogramForTrait(String title, String trait, String fileName) {
         super(title);
 
-        HistogramDataset dataset = createDataSet(trait);
+        HistogramDataset dataset = createDataSet(trait, fileName);
         JFreeChart histogram = createHistogram(dataset, trait);
 
 
@@ -29,11 +29,11 @@ public class HistogramForTrait extends JFrame {
         setContentPane(chartPanel);
     }
 
-    private HistogramDataset createDataSet(String trait) {
+    private HistogramDataset createDataSet(String trait, String fileName) {
         HistogramDataset dataset = new HistogramDataset();
         List<Double> traitValues = new ArrayList<>();
 
-        try (CSVParser csvParser = new CSVParser(new FileReader("src/Database/ProcessedCatData.csv"), CSVFormat.DEFAULT.withHeader())) {
+        try (CSVParser csvParser = new CSVParser(new FileReader("src/Database/" + fileName + ".csv"), CSVFormat.DEFAULT.withHeader())) {
             for (CSVRecord record : csvParser) {
                 double traitValue = Double.parseDouble(record.get(trait));
                 traitValues.add(traitValue);
