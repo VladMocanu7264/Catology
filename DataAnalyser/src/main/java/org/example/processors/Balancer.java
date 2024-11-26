@@ -20,7 +20,7 @@ public class Balancer {
             }
 
             if (count > perBreedPopulationSize) {
-                balancedCats = removeEntries(balancedCats, i, count - perBreedPopulationSize);
+                balancedCats = removeEntries(balancedCats, i, stats, count - perBreedPopulationSize);
             } else {
                 balancedCats = addEntries(balancedCats, i, stats, perBreedPopulationSize - count);
             }
@@ -38,7 +38,7 @@ public class Balancer {
         return databaseStats.get(0);
     }
 
-    private static List<Cat> removeEntries(List<Cat> cats, int breed, int diff) {
+    private static List<Cat> removeEntries(List<Cat> cats, int breed, Stats stats, int diff) {
         List<Cat> processedCats = new ArrayList<>(cats);
 
         //get all the cat indexes
@@ -51,13 +51,35 @@ public class Balancer {
             index++;
         }
 
+        //generate all weights
+        Double[] weights = new Double[thisBreedsCats.size()];
+        for(int i = 0; i < thisBreedsCats.size(); ++i) {
+            weights[i] = 0.;
+            for(Attributes attribute : Attributes.values()) {
+                if(attribute.equals(Attributes.breed))
+                    continue;
+                List<Integer> frequencies = stats.getMapOfAttributes().get(attribute);
+                int value = cats.get(thisBreedsCats.get(i)).getAttribute(attribute);
+                weights[i] += 1 / ((double) frequencies.get(value - 1) / thisBreedsCats.size());
+            }
+        }
+
+        //normalise weights
+        Double sum = 0.;
+        for(Double weight : weights) {
+            sum += weight;
+        }
+        for(int i = 0; i < weights.length; ++i) {
+            weights[i] = weights[i] / sum;
+        }
+
         //generate random indexes to remove
         List<Integer> indexesToRemove = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < diff; i++) {
-            int id = random.nextInt(thisBreedsCats.size());
+            int id = getAnId(weights, random);
             while (indexesToRemove.contains(id)) {
-                id = random.nextInt(thisBreedsCats.size());
+                id = getAnId(weights, random);
             }
             indexesToRemove.add(id);
         }
@@ -69,6 +91,17 @@ public class Balancer {
         }
 
         return processedCats;
+    }
+
+    private static int getAnId(Double[] weights, Random random) {
+        int id = -1;
+        Double chance = random.nextDouble();
+        while(chance > 0) {
+            id++;
+            chance -= weights[id];
+        }
+
+        return id;
     }
 
     private static List<Cat> addEntries(List<Cat> cats, int breed, Stats stats, int diff) {
