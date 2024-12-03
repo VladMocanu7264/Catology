@@ -27,7 +27,7 @@ class Neuron:
 
     def activate(self):
         sumo = 0
-        for index in range(self.prev_layer):
+        for index in range(len(self.prev_layer)):
             sumo += self.prev_layer[index].output * self.weights[index]
         self.output = max(0., sumo + self.bias)
 
@@ -62,4 +62,8 @@ class NeuralNetwork:
         observed[observation - 1] = 1
         return sum([-math.log(neuron.output) * observed[i] for i, neuron in enumerate(self.outputs)])
 
+
+nn = NeuralNetwork(25, [10, 10], 13)
+nn.calculate_outputs_for_entry([2, 1, 2, 4, 3, 4, 3, 2, 2, 1, 4, 4, 4, 4, 4, 3, 2, 4, 2, 4, 4, 4, 3, 1, 5])
+print(nn.calculate_loss(13))
 
